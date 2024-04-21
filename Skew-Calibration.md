@@ -18,4 +18,5 @@ This skew calibration model can also be used to check the accuracy of each axis.
 The diameter of this octagon (at 100% scale) is 85 mm. If you are using the notches for aligning caliper jaws, the diameter will be 79 mm. 
 
 Enter your measurements into the script prompts and to apply the skew factor, press 'y'.
+
 <img width="266" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/7a0cee41-e47a-491a-8be1-77eae9b843cc">
