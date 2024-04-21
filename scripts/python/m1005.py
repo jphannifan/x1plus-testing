@@ -102,8 +102,7 @@ def main_menu(ddspub):
 
 def main():
     pub = dds.publisher('device/request/print')
-    time.sleep(1.5
-    )
+    time.sleep(1.5)
     main_menu(pub)
 
 if __name__ == "__main__":
