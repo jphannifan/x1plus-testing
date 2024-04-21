@@ -52,7 +52,7 @@ def calculate_geometry(ddspub):
     try:
         CD = float(input("Enter measurement for CD: "))
         AB = float(input("Enter measurement for AB: "))
-        AC = float(input("Enter measurement for AC: ")) / math.sqrt(2)
+        AC = float(input("Enter measurement for EF: ")) / math.sqrt(2)
         CB = round(math.sqrt(2 * CD**2 + 2 * AB**2 - 4 * AC**2) / 2,2)
         skew_factor = -round(math.tan(math.pi/2 - math.acos((CD**2 - CB**2 - AC**2) / (2 * CB * AC))),5)
         print(f"Calculated skew factor: {skew_factor}")
