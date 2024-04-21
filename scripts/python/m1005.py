@@ -5,7 +5,7 @@ import re
 import dds
 import json
 
-# Global dictionary to store values
+# This is pretty shitty code
 stored_value = {}
 
 def pub_dds(ddspub, cmd):
@@ -53,9 +53,8 @@ def calculate_geometry(ddspub):
         CD = float(input("Enter measurement for CD: "))
         AB = float(input("Enter measurement for AB: "))
         AC = float(input("Enter measurement for AC: ")) / math.sqrt(2)
-        CB = math.sqrt(2 * CD**2 + 2 * AB**2 - 4 * AC**2) / 2
-        skew_factor = -math.tan(math.pi/2 - math.acos((CD**2 - CB**2 - AC**2) / (2 * CB * AC)))
-        print(f"Calculated CB: {CB}")
+        CB = round(math.sqrt(2 * CD**2 + 2 * AB**2 - 4 * AC**2) / 2,2)
+        skew_factor = -round(math.tan(math.pi/2 - math.acos((CD**2 - CB**2 - AC**2) / (2 * CB * AC))),5)
         print(f"Calculated skew factor: {skew_factor}")
         stored_value['CB'] = CB
         stored_value['Skew Factor'] = skew_factor
@@ -75,7 +74,6 @@ def main_menu(ddspub):
     while True:
         skew_factor = stored_value.get('Skew Factor')
         if skew_factor is not None:
-            skew_factor = -round(skew_factor, 4)
             printstr = f"3. Apply and save calculated factor: {skew_factor}"
         else:
             printstr = "3. Calculate compensation factor"
@@ -104,6 +102,8 @@ def main_menu(ddspub):
 
 def main():
     pub = dds.publisher('device/request/print')
+    time.sleep(1.5
+    )
     main_menu(pub)
 
 if __name__ == "__main__":
