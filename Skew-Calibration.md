@@ -13,10 +13,19 @@
 This skew calibration model can also be used to check the accuracy of each axis. For skew calibration, you only need to make 3 measurements. The skew calibration model I have made allows you to make the same 3 measurements from different sides of an octagon, so if you are using a different model you may need to confirm you are measuring the correct segments.
 
 <img width="300" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/72596bf0-5565-40c8-ab55-13b8242b759e">
-<img width="300" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/54bf52c5-6b32-4c25-b739-dbde8dd32669">
+<img width="320" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/54bf52c5-6b32-4c25-b739-dbde8dd32669">
 
 The diameter of this octagon (at 100% scale) is 85 mm. If you are using the notches for aligning caliper jaws, the diameter will be 79 mm. 
 
 Enter your measurements into the script prompts and to apply the skew factor, press 'y'.
 
 <img width="266" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/7a0cee41-e47a-491a-8be1-77eae9b843cc">
+
+
+
+## Measurement guide
+
+<img width="300" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/7fc27ecf-0f12-4bcf-8c12-271cc8fbed67">
+
+<img width="300" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/db4e5fc5-f98a-4521-993f-2c11c4d23048">
+
