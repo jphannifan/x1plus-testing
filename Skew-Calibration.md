@@ -45,7 +45,6 @@ Enter your measurements into the script prompts and to apply the skew factor, pr
      ```math
       CB = \sqrt{2CD^2 + 2AB^2 - 4EF^2} / 2 
      ```
-   - This equation derives the length of one side of the square using its diagonals and another side.
 
 3. **Calculate Skew Factor**:
    - Equation:
