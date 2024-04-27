@@ -1,4 +1,4 @@
-## Skew calibration for X1c running X1Plus
+## Skew calibration for Bambu X1C/X1E running X1Plus
 
 1) Download ["m1005.py"](https://github.com/jphannifan/x1plus-testing/blob/main/scripts/python/m1005.py) from /scripts/python and save it to your printer in the folder `/opt/`
 2) Download the [skew calibration model](https://github.com/jphannifan/x1plus-testing/blob/main/skew.step) (or use your own) and print it. I print mine at 100% scale with PLA and default slicer settings.
@@ -18,7 +18,11 @@
 {skew_factor} with your calculated value:
 ```
 device/#/request
+Request saved value:
 
+{"print": {"command": "gcode_line", "param": "M1005", "sequence_id": 123}}
+
+Apply and save:
 {"print": {"command": "gcode_line", "param": "M1005 I{skew_factor} \n M500\n", "sequence_id": 123}}
 ```
 
