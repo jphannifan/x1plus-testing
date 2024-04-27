@@ -46,15 +46,7 @@ Enter your measurements into the script prompts and to apply the skew factor, pr
 <img width="300" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/db4e5fc5-f98a-4521-993f-2c11c4d23048">
 
 
-## Explanation
-
-
-#### Step 1: Measurement Collection
-1. **Segment CD**: Measurement of diagonal across the octagon between points C and D.
-2. **Segment AB**: Measure another diagonal, perpendicular to the first between points A and B.
-3. **Segment EF**: Measurement of a 3rd diagonal of the octagon between points E and F.
-
-#### Step 2: Calculations
+## Calculations
 1. **Calculate CB**:
    - We need to know the length of the side of the square inscribed within the octagon, which we can find by dividing the length of the diagnol EF by SQRT(2). 
    - Equation:
