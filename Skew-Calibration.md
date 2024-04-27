@@ -22,7 +22,7 @@ device/#/request
 {"print": {"command": "gcode_line", "param": "M1005 I{skew_factor} \n M500\n", "sequence_id": 123}}
 ```
 
-4) Publish the M1005 command with no arguments and the printer will output a response via MQTT. This XY_comp_ang value is the skew factor currently active on youe device. 
+4) To verify that your skew factor has actually been applied, you can publish the M1005 command with no arguments and the printer will output a response via MQTT. This XY_comp_ang value is the skew factor currently active on youe device. 
 
 ## Measurements
 
