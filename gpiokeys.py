@@ -64,7 +64,7 @@ class Button:
     def run_macro(self, script_path):
         if script_path:
             try:
-                subprocess.run(["python3", script_path], check=True)
+                subprocess.run(["/opt/python/bin/python3", script_path], check=True)
                 gpio_log.info(f"Macro executed successfully: {script_path}")
             except subprocess.CalledProcessError as e:
                 gpio_log.error(f"Failed to execute macro: {script_path}, Error: {e}")
