@@ -12,7 +12,7 @@
 
 1) Download this Google worksheets document (link coming soon) and download the [skew calibration model](https://github.com/jphannifan/x1plus-testing/blob/main/skew.step)
 
-2) Print the calibration model and using calipers measure 3 of the segments as detailed below. Enter your measurements into the worksheet to obtain the skew correction factor. Note: the printer appears to round to 4 digits (ie if you save a skew of 0.00113, 0.0011 will be the value that is actually saved)
+2) Print the calibration model and using calipers measure 3 of the segments as detailed below. Enter your measurements into the worksheet to obtain the skew correction factor. Note: the printer appears to round to 5 digits (ie if you save a skew of 0.001234, 0.00123 will be the value that is actually saved)
 
 3) Publish MQTT command to apply and save values. If you would prefer to not use MQTT, you may skip 3 and 4 and add the gcode command containing your skew factor to your print startup code. Publish this MQTT command, replacing 
 {skew_factor} with your calculated value:
