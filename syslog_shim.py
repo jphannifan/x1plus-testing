@@ -8,8 +8,18 @@ from collections import namedtuple
 from logger.tail import TailLog
 import dds
 import math
-#applies a skew factor from `/mnt/sdcard/m1005.txt`` every time there's not one applied. 
-syslog_log = CustomLogger("Syslog parser", "/tmp/x1plus_data.log", 500000, 1)
+
+skew_file_path = "/mnt/sdcard/skew.txt"
+
+log_path = (
+    "/mnt/sdcard/log/"
+    if os.path.exists("/tmp/.syslog_to_sd") and os.path.exists("/mnt/sdcard/log/")
+    else "/tmp/"
+)
+shim_log_path = os.path.join(log_path,"x1plus_data.log")
+syslog_log = CustomLogger("Syslog shim data", shim_log_path, 500000, 1)
+log_path = os.path.join(log_path,"syslog.log")
+
 
 # Define a basic mechanism for "do something when you see some particular
 # type of line in the syslog".
@@ -22,19 +32,18 @@ def publish_skew_factor(current_skew):
 	try:
 		skew_factor = 0
 		if not os.path.exists('/tmp/m1005'):
-			if os.path.exists('/mnt/sdcard/m1005.txt'):
-				with open('/mnt/sdcard/m1005.txt', 'r') as f:
+			if os.path.exists(skew_file_path):
+				with open(skew_file_path, 'r') as f:
 					skew_factor = f.read().strip()
 					skew_factor = float(skew_factor)
 
-			if math.fabs(skew_factor) > 0:
+			if math.fabs(current_skew - skew_factor) > 0:
 				cmd = f"M1005 I{skew_factor}\nM500\n" 
 				open('/tmp/m1005', 'w').close()
 			else:
 				cmd = "M1005" 
-
 			dds_m1005(json.dumps({"command": "gcode_line", "param": cmd, "sequence_id": 0}))
-			print(cmd)
+   
 	except IOError as e:
 		print(f"IOError: {str(e)}", file=sys.stderr)
 	
@@ -50,9 +59,9 @@ def RegexParser(regex, format):
 		syslog_log.info(f"[x1p] - {json.dumps(obj)}")
 		dds_publish_mc_print(json.dumps(obj))
 		if "M1005" in compiled_regex.pattern:
-			publish_skew_factor(float(match.group(1)))
+			publish_skew_factor(float(match.group(2)))
 		else:
-			publish_skew_factor(-1)
+			publish_skew_factor(0)
 
 	return RegexHandler(compiled_regex, fn)
 
@@ -146,22 +155,20 @@ syslog_data = [
             },
         },
     ),
-       # M1005 skew factor
+   # M1005 skew factor
     RegexParser(
-        r".*M1005:current\s*XY_comp_ang\s*=\s*(-?\d+\.?\d*)",
+        r".*M1005:(new|current)\s*XY_comp_ang\s*=\s*(-?\d+\.?\d*)",
         lambda match: {
             "command": "M1005",
-            "XY_comp_ang":  float(match.group(1)),
+            "param": {
+                "skew":  match.group(1),
+                "XY_comp_ang":  float(match.group(2)),
+            },
         },
     ),
 ]
 
 def main():
-    log_path = (
-        "/mnt/sdcard/log/syslog.log"
-        if os.path.exists("/tmp/.syslog_to_sd") and os.path.exists("/mnt/sdcard/log/syslog.log")
-        else "/tmp/syslog.log"
-    )
 
     tail_syslog = TailLog(log_path)
     for line in tail_syslog.lines():
