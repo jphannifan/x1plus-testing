@@ -8,9 +8,17 @@ from collections import namedtuple
 from logger.tail import TailLog
 import dds
 import math
+import time
 
+### Janky solution for persistent skew factor:
+# Replace /opt/syslog_shim.py with this script
+# Save your calculated skew correction factor (value in radians) in a text file in /mnt/sdcard/skew.txt
+# The text file should look something like this: "0.00113". Do not include the gcode command!
+# Reboot or restart all logging services. This will ensure your skew is always set to the value in skew.txt
+# You can view your skew values in /tmp/x1plus_data.log 
+#######################################
 skew_file_path = "/mnt/sdcard/skew.txt"
-
+#######################################
 log_path = (
     "/mnt/sdcard/log/"
     if os.path.exists("/tmp/.syslog_to_sd") and os.path.exists("/mnt/sdcard/log/")
@@ -27,26 +35,24 @@ RegexHandler = namedtuple("RegexHandler", ["regex", "callback"])
 
 dds_publish_mc_print = dds.publisher("device/report/mc_print")
 dds_m1005 = dds.publisher("device/request/print")
+time.sleep(3)
+try:
+    skew_factor = 0
+    if not os.path.exists('/tmp/m1005'):
+        if os.path.exists(skew_file_path):
+            with open(skew_file_path, 'r') as f:
+                skew_factor = f.read().strip()
+                skew_factor = float(skew_factor)
 
-def publish_skew_factor(current_skew):
-	try:
-		skew_factor = 0
-		if not os.path.exists('/tmp/m1005'):
-			if os.path.exists(skew_file_path):
-				with open(skew_file_path, 'r') as f:
-					skew_factor = f.read().strip()
-					skew_factor = float(skew_factor)
-
-			if math.fabs(current_skew - skew_factor) > 0:
-				cmd = f"M1005 I{skew_factor}\nM500\n" 
-				open('/tmp/m1005', 'w').close()
-			else:
-				cmd = "M1005" 
-			dds_m1005(json.dumps({"command": "gcode_line", "param": cmd, "sequence_id": 0}))
-   
-	except IOError as e:
-		print(f"IOError: {str(e)}", file=sys.stderr)
-	
+        if math.fabs(skew_factor) > 0:
+            cmd = f"M1005 I{skew_factor}\nM500\n" 
+            open('/tmp/m1005', 'w').close()
+        else:
+            cmd = "M1005" 
+        dds_m1005(json.dumps({"command": "gcode_line", "param": cmd, "sequence_id": 0}))
+except (IOError, ValueError) as e:
+    print(f"Error reading skew factor from file: {str(e)}")
+    skew_factor = 0
         
 def RegexParser(regex, format):
 	"""
@@ -58,10 +64,6 @@ def RegexParser(regex, format):
 		print(f"Publishing matched object: {obj}", file=sys.stderr)
 		syslog_log.info(f"[x1p] - {json.dumps(obj)}")
 		dds_publish_mc_print(json.dumps(obj))
-		if "M1005" in compiled_regex.pattern:
-			publish_skew_factor(float(match.group(2)))
-		else:
-			publish_skew_factor(0)
 
 	return RegexHandler(compiled_regex, fn)
 
@@ -167,7 +169,8 @@ syslog_data = [
         },
     ),
 ]
-
+	
+ 
 def main():
 
     tail_syslog = TailLog(log_path)
