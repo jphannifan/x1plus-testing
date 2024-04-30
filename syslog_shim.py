@@ -12,11 +12,12 @@ import time
 
 ### M1005 logging and persistence:
 # 1) Replace /opt/syslog_shim.py with this script
-# 2) Save your calculated skew correction factor (value in radians) in a text file*** in /mnt/sdcard/skew.txt 
+# 2) Optional: Save your calculated skew correction factor (value in radians) in a text file*** in /mnt/sdcard/skew.txt 
 #   - This command alters the toolhead's positioning, so I highly advise making this file read only 
 #   - Make it read-only: chmod 444 /mnt/sdcard/skew.txt
 # 3) Reboot or restart the logging service and now all XY_comp_ang data will be sent to /tmp/x1plus_data.log
 #    and if you have a skew correction value stored in skew.txt, it will apply it when the printer is rebooted
+# 4) This modification will be overwritten the next time you install an x1p file. 
 # *** Do not include the gcode command in this file! Only the value, e.g. "0.00113"
 #######################################
 skew_file_path = "/mnt/sdcard/skew.txt"
