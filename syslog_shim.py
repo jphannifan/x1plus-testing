@@ -10,12 +10,14 @@ import dds
 import math
 import time
 
-### Janky solution for persistent skew factor:
-# Replace /opt/syslog_shim.py with this script
-# Save your calculated skew correction factor (value in radians) in a text file in /mnt/sdcard/skew.txt
-# The text file should look something like this: "0.00113". Do not include the gcode command!
-# Reboot or restart all logging services. This will ensure your skew is always set to the value in skew.txt
-# You can view your skew values in /tmp/x1plus_data.log 
+### M1005 logging and persistence:
+# 1) Replace /opt/syslog_shim.py with this script
+# 2) Save your calculated skew correction factor (value in radians) in a text file*** in /mnt/sdcard/skew.txt 
+#   - This command alters the toolhead's positioning, so I highly advise making this file read only 
+#   - Make it read-only: chmod 444 /mnt/sdcard/skew.txt
+# 3) Reboot or restart the logging service and now all XY_comp_ang data will be sent to /tmp/x1plus_data.log
+#    and if you have a skew correction value stored in skew.txt, it will apply it when the printer is rebooted
+# *** Do not include the gcode command in this file! Only the value, e.g. "0.00113"
 #######################################
 skew_file_path = "/mnt/sdcard/skew.txt"
 #######################################
