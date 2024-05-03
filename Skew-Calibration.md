@@ -5,8 +5,9 @@
 2) Download the [skew calibration model]() or provide your own and print it. 
 3) Run the Python script and follow the instructions to calculate your skew. 
 ... under construction...
-6) After applying the correction factor, print the same model again in the same orientation with the same settings. Then start this process over again from step 3 until you're satisfied with the result.
-
+4) Apply the correction factor and print the calibration model using the exact same slicer settings and material.
+5) Measure the dimensions of the last print, and if your tolerances are greater than 0.1-0.2%, consider repeating the process from Step 1.
+   
 ## Skew calibration for all other Bambu devices
 
 1) Download this Google worksheets document (link coming soon) and download the [skew calibration model](https://github.com/jphannifan/x1plus-testing/blob/main/skew.step)
