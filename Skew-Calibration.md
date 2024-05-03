@@ -53,15 +53,14 @@ under construction...
    - We need to know the length of the side of the square inscribed within the octagon, which we can find by dividing the length of the diagonal EF by SQRT(2).
    - Equation:
      ```math
-      CA = \sqrt{2CD^2 + 2AB^2 - 4EF^2} / 2 
+        CA = \frac{EF}{\sqrt{2}}
      ```
 
 3. **Calculate Skew Factor**:
-   - Equation:
      ```math
-      \text{skew factor} = -\tan\left(\frac{\pi}{2} - \cos^{-1}\left(\frac{CD^2 - CB^2 - AC^2}{2 \times CB \times AC}\right)\right) 
+      \text{skew (degrees)} = 45 - \text{degrees}\left(\text{asin}\left(\frac{CA}{\text{MAX}(AB, CD)}\right)\right)
      ```
-   - This calculates the tangent of the skew angle to find the skew factor necessary for adjustment.
+   - 
 
 #### Gcode command:
 - Apply skew factor:  M1005 I{-skew factor}
