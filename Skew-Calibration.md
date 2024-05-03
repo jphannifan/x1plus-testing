@@ -1,12 +1,11 @@
-## Skew calibration for Bambu X1C/X1E running X1Plus
+## Skew calibration for Bambu printers
 
-1) Download ["m1005.py"](https://github.com/jphannifan/x1plus-testing/blob/main/scripts/python/m1005.py) from /scripts/python and save it to your printer in the folder `/opt/`
-2) Download the [skew calibration model](https://github.com/jphannifan/x1plus-testing/blob/main/skew.step) (or use your own) and print it. I print mine at 100% scale with PLA and default slicer settings.
-3) Launch the script from Step 1 by opening an SSH session with your printer and running the following command:
-   `/opt/python/bin/python3 /opt/m1005.py`
-4) Follow the command line instructions. The script will complete all of the calculations and enter the gcode commands necessary. You can view the current skew compensation value saved on your printer by running option 2
-   <img width="354" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/7ae77a62-22d9-4396-a781-363d97af46d2">
-5) After applying the correction factor, print the same model again in the same orientation with the same settings. Then start this process over again from step 3 until you're satisfied with the result.
+1) Download ["Skew.py"]() from /scripts/python. X1Plus users can run this file directly on the printer by saving it to the SD card and running the following:
+   - `python3 /mnt/sdcard/skew.py`
+2) Download the [skew calibration model]() or provide your own and print it. 
+3) Run the Python script and follow the instructions to calculate your skew. 
+... under construction...
+6) After applying the correction factor, print the same model again in the same orientation with the same settings. Then start this process over again from step 3 until you're satisfied with the result.
 
 ## Skew calibration for all other Bambu devices
 
@@ -30,32 +29,30 @@ Apply and save:
 
 ## Measurements
 
-This skew calibration model can also be used to check the accuracy of each axis and to calculate a correction factor you can use to correct dimensional inaccuracy in your prints. For skew calibration, you only need to make 3 measurements. The skew calibration model I have made allows you to make the same 3 measurements from different sides of an octagon, so if you are using a different model you may need to confirm you are measuring the correct segments.
+This skew calibration model can also be used to check the accuracy of each axis and to calculate a correction factor you can use to correct dimensional inaccuracy in your prints. By measuring the length of the nominal diameter from 3 of the specified sides of the octagon, we can then calculate a skew value that represents the XY skew relative to the X-axis (at this time, skew calibration in other axes is not available). 
 
-<img width="300" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/72596bf0-5565-40c8-ab55-13b8242b759e">
-<img width="320" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/54bf52c5-6b32-4c25-b739-dbde8dd32669">
+<img width="400" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/b57a2a0a-4959-42fa-b97d-3f2d16470ffb">
 
-The diameter of this octagon (at 100% scale) is 85 mm. If you are using the notches for aligning caliper jaws, the diameter will be 79 mm. 
 
-Enter your measurements into the script prompts and to apply the skew factor, press 'y'.
+The nominal diameter of the octagon is 100 mm if measured from the edges and 94 mm if measured from the inset. See the diagram below
+<img width="400" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/b5c2edaf-bc61-475e-8b21-c5091933f575">
 
-<img width="266" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/7a0cee41-e47a-491a-8be1-77eae9b843cc">
+under construction...
 
 
 
 ## Measurement guide
 
-<img width="300" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/7fc27ecf-0f12-4bcf-8c12-271cc8fbed67">
+<img width="455" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/b5c2edaf-bc61-475e-8b21-c5091933f575">
 
-<img width="300" alt="image" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/db4e5fc5-f98a-4521-993f-2c11c4d23048">
 
 
 ## Calculations
-1. **Calculate CB**:
-   - We need to know the length of the side of the square inscribed within the octagon, which we can find by dividing the length of the diagnol EF by SQRT(2). 
+1. **Calculate CA**:
+   - We need to know the length of the side of the square inscribed within the octagon, which we can find by dividing the length of the diagonal EF by SQRT(2).
    - Equation:
      ```math
-      CB = \sqrt{2CD^2 + 2AB^2 - 4EF^2} / 2 
+      CA = \sqrt{2CD^2 + 2AB^2 - 4EF^2} / 2 
      ```
 
 3. **Calculate Skew Factor**:
