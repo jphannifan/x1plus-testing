@@ -248,14 +248,6 @@ M973 S6 P1 ; auto expose for vertical laser
 | M73.2  | R1.0  | Reset print progress
 *note: 90s is max value that can be delayed with G4. To delay for > 90 sec, run multiple G4 S90
 
-
-
-# Unknown
-```gcode
-M969 S1 N3 A2000
-M980.3 A B C D E F G H I J K 
-G92.1 E0
-```
 ### AMS
 ```gcode
 M622 J{j}
@@ -278,9 +270,7 @@ M622.1 S1
 ```gcode
 T255
 ```
-noise cancellation:
-M982 Q P V D L T I
-M982.4 S V
+
 
 
 |  Command  |  Argument | Usage
@@ -304,3 +294,14 @@ M620 P# - select AMS tray by tray index
 M620 S# - select AMS by tray index
 M621
 M621 S#- load filament in AMS by tray index
+Stolen from Doridian's repo https://github.com/Doridian/OpenBambuAPI/blob/main/gcode.md
+
+# undocumented still
+```gcode
+M969 S1 N3 A2000
+M980.3 A B C D E F G H I J K 
+G92.1 E0
+noise cancellation:
+M982 Q P V D L T I
+M982.4 S V
+```
