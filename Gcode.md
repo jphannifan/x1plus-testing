@@ -72,15 +72,16 @@ Counter-clockwise arc from (20,20) with a radius of 5, with extrusion   G3 X20 Y
 ```
 
 
-
+## Useful coordinates and reference points
 | Location  | X  | Y | Z |
 |---|---|---|---|
-| Center  | 128  | 128  | -  |
-| Toolhead camera reference grid  | 240  | 90  | 8  |
+| Center of build plate  | 128  | 128  | -  |
+| LiDAR reference grid  | 240  | 90  | 8  |
 | Print finished position  | 65  | 260  | 10  |
-| Bed screw 1  | 134.8  | 242.8  | -  |
-| Bed screw 2  | 33.2  | 13.2  | -  |
-| Bed screw 3  | 222.8  | 13.2  | -  |
+| Bed tramming screw 1  | 134.8  | 242.8  | -  |
+| Bed tramming screw 2  | 33.2  | 13.2  | -  |
+| Bed tramming screw 3  | 222.8  | 13.2  | -  |
+| Build plate nozzle wipe tab | 135  | 253  | -  |
 
 
 | Command  | Argument  | Usage  
@@ -120,13 +121,11 @@ Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 | M302  | S70 P0/P1  | Toggle cold extrusion 
 | M975  | S0/S1  | Toggle vibration compensation  
 | M982.2  | C0/C1  |  Disable motor noise cancellation 
-| G29.2 | S0/S1  |  Toggle ABL | 
+| G29.2 | S0  |  Disable all motors | 
 | M1003 | S0/S1  |  Toggle power loss recovery 
 | M500  |  -    | Save to EEPROM
 
-
-### Print Speed - [Click here for more info](https://github.com/jphannifan/x1plus-testing/blob/main/BL-speed-adjust.md)
-
+## Print Speed - [Click here for more info](https://github.com/jphannifan/x1plus-testing/blob/main/BL-speed-adjust.md)
 | Command  | Argument  | Usage  |
 |---|---|---|
 | M204.2  | K (unitless)  | acceleration magnitude (default=1)  |
@@ -134,7 +133,7 @@ Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 | M73.2  | R (unitless) | time constant (default=1)  |
 | M1002  | set_gcode_claim_speed_level  | (default=5)  |
 
-
+## Vibration Compensation
 | Command  | Arguments   | Usage
 |---|---|---
 | M970  | Q A B C H K  | Vibration compensation frequency sweep
@@ -279,9 +278,9 @@ M622.1 S1
 ```gcode
 T255
 ```
-
-
-
+noise cancellation:
+M982 Q P V D L T I
+M982.4 S V
 
 
 |  Command  |  Argument | Usage
