@@ -66,6 +66,5 @@ $$ \text{feed\_rate} = 6.426 \times 10^{-5} \times \text{speed\_percent}^2 - 2.4
 ## Notes
 - While you can edit each parameter individually, I highly recommend you apply M220, M204.2, and M73.2 together at once. Otherwise you will experience print artifacts due to rapid adjustments in extrusion rate.
 - As long as you apply speed profiles within or close to the interpolated range (~35-175%), you will have consistent print results across this entire range of speeds. Outside of the interpolated range, these equations do not scale extrusion rate proportionally with toolhead movement! You should consider a different trendline for values above 175%. 
-- The tested range for these trendlines is 30% to 180%. It is possible to extrapolate and go above 180% up to around 500%, however these trendlines will not work. 
 - These trendlines and Gcode commands can be used to apply custom speed levels to A1, P1, and X1 printers. The same Gcode commands will work, however the X1 is the only model with direct support for this feature.
-- M204.2 impacts the toolhead speed during print startup. This could result in unexpected high speed toolhead movements. You can also use this to increase the speed of the touchscreen extruder controls. 
+- M204.2 will alter the toolhead speed in print startup and even with the manual axis controls. Likewise, M220 alters the extrusion rate and the "speed" of the touchscreen extruder controls. Bambu's speed profiles have this effect as well. (tldr you can use this to speed up the extruder controls)
