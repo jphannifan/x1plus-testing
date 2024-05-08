@@ -47,7 +47,7 @@ Todo:
 | M106  | P2 S[speed]  | 0-255  | Adjust aux fan  |
 | M106  | P3 S[speed]  | 0-255  | Adjust chamber fan  |
 
-
+## G0 and G1
 | Command  | X Y Z  |  F  |  E  | Usage |
 |---|---|---|---|---|
 | G0 |  Absolute or relative (mm)  | Feed rate used from start to end point (mm/s) | N/A | Linear non-print movement |
@@ -60,7 +60,7 @@ Move Z axis to 240 mm at 300 mm/s: G1 Z240 F300
 
 ```
 
-
+## Arc Movements
 | Command  | X Y Z  |  I  |  J  |  R  |  F  |  E  | Usage |
 |---|---|---|---|---|---|---|---|
 | G2 |  Absolute or relative (mm)  | X offset (relative, mm) | Y offset (relative, mm) | Radius  |  Feed rate used from start to end point (mm/s) | Abs/rel extrusion (mm) | Clockwise arc |
@@ -83,7 +83,7 @@ Counter-clockwise arc from (20,20) with a radius of 5, with extrusion   G3 X20 Y
 | Bed tramming screw 3  | 222.8  | 13.2  | -  |
 | Build plate nozzle wipe tab | 135  | 253  | -  |
 
-
+## Motor controls
 | Command  | Argument  | Usage  
 |---|---|---|
 |  M17 | X Y Z  | Set stepper current (unitless)  
@@ -93,6 +93,7 @@ Counter-clockwise arc from (20,20) with a radius of 5, with extrusion   G3 X20 Y
 |  M18  | X Y Z E  |  Disable steppers for certain axes  
 Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 
+## Coordinate commands
 | Command  | Usage  
 |---|---
 | G90  | Absolute coordinates  
@@ -100,7 +101,7 @@ Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 | G92 E0  | Reset extruder position  
 | M83  | Set extruder relative  
 
-
+## Speed/acceleration/endstop limits
 | Command  | Argument |  Default |  Usage
 |---|---|---|---|
 | M201  | Z (mm/s) | -  | Z axis acceleration limit  |
@@ -112,7 +113,6 @@ Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 | M204  | S  | -  | Acceleration limit
 | M205  | X Y Z  (mm/s) | 0  | Set jerk limits
 | M211  | X Y Z  (mm) | -  | Set soft endstops
-
 
 
 | Command  | Arguments | Usage  |
@@ -165,7 +165,7 @@ K: not sure but = 0 or 1
 | M900  | - | Publish to return currently saved pressure advance |
 
 
-
+## Skew compensation
 | Command  | Argument |  Usage
 |---|---|---|
 | M1005  | X Y (mm) | Calculates skew (rad) from lengths of diagonals measured  |
@@ -174,16 +174,16 @@ K: not sure but = 0 or 1
 | M290.2  | X Y (mm) |  XY compensation  |
 
 
-## M960
+## LED controls
 | Argument | Value  | Usage  |
 |---|---|---|
-|  S1  | 0 or 1  | Toggle horizontal laser |
-|  S2  | 0 or 1  | Toggle vertical laser  | 
-|  S3  | 0 or 1  | Toggle toolhead LED  | 
-|  S4  | 0 or 1  | Toggle nozzle LED |  
-|  S0  | 0 or 1  | Toggle all LEDs  |  
+|  M960 S1  | 0 or 1  | Toggle horizontal laser |
+|  M960 S2  | 0 or 1  | Toggle vertical laser  | 
+|  M960 S3  | 0 or 1  | Toggle toolhead LED  | 
+|  M960 S4  | 0 or 1  | Toggle nozzle LED |  
+|  M960 S0  | 0 or 1  | Toggle all LEDs  |  
 
-
+## Camera Controls
 | Command | S  |  P |  Usage  
 |---|---|---|---|
 | M973  | S3  | - | Nozzle cam on  
