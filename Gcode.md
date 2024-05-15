@@ -1,4 +1,4 @@
-# Bambu Labs Gcode Commands
+# Bambu Labs Gcode Commands - Under construction!
 
 ## Overview
 
@@ -105,12 +105,12 @@ Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 | Command  | Argument |  Default |  Usage
 |---|---|---|---|
 | M201  | Z (mm/s) | -  | Z axis acceleration limit  |
-| M201.2  | K  | 1.0  | Set acceleration multiplier
+| M204.2  | K  | 1.0  | Set acceleration multiplier
 | M220  | S  | 100  | Set Feed Rate
 | M221  | S  | 100  | Set Flow Rate
 | M221  | S  | -  | Push soft endstop status
 | M221  | Z0  | -  | Turn off Z endstop
-| M204  | S  | -  | Acceleration limit
+| M204  | S  | -  | Acceleration limit (mm/s^2)
 | M205  | X Y Z  (mm/s) | 0  | Set jerk limits
 | M211  | X Y Z  (mm) | -  | Set soft endstops
 
@@ -121,7 +121,7 @@ Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 | M302  | S70 P0/P1  | Toggle cold extrusion 
 | M975  | S0/S1  | Toggle vibration compensation  
 | M982.2  | C0/C1  |  Disable motor noise cancellation 
-| G29.2 | S0  |  Disable all motors | 
+| G29.2 | S0/S1  |  Toggle bed mesh compensation
 | M1003 | S0/S1  |  Toggle power loss recovery 
 | M500  |  -    | Save to EEPROM
 
@@ -298,6 +298,9 @@ Stolen from Doridian's repo https://github.com/Doridian/OpenBambuAPI/blob/main/g
 
 # undocumented still
 ```gcode
+G29.4 S0/S1 - toggles "high freq z comp" 
+G29.5 - "G29.5 failed: invalid params"
+G29.6, G29.7, G29.8 - runs normal bed probing sequence? 
 M969 S1 N3 A2000
 M980.3 A B C D E F G H I J K 
 G92.1 E0
