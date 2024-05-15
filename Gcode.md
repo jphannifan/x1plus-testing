@@ -14,7 +14,6 @@ Todo:
 
 ## Table of Contents
 
-- [Homing and positioning](#homing-and-positioning)
 
 
 ## Homing and positioning
@@ -53,11 +52,11 @@ Todo:
 | G0 |  Absolute or relative (mm)  | Feed rate used from start to end point (mm/s) | N/A | Linear non-print movement |
 | G1 |  Absolute or relative (mm)  | Feed rate used from start to end point (mm/s) | Abs/rel extrusion (mm) | Linear print movement |
 ```gcode
-Linear non-print move to (0,0) at 10,000 mm/s:                  G0 X0 Y0 F10000
-Linear print movement to (0,0) at 10,000 mm/s extruding 5 mm:   G1 X0 Y0 F10000 E5
-Adjust speed 20,000 mm/s:                                       G1 F20000
-Move Z axis to 240 mm at 300 mm/s: G1 Z240 F300
-
+Usage:
+G0 X0 Y0 F10000 ; Linear move to 0,0 at 10,000 mm/s^2 without extrusion
+G1 X0 Y0 F10000 E5 ; Linear move to 0,0 at 10,000 mm/s^2 while extruding 5 mm of filament
+G1 F20000 ; adjust acceleration to be used with upcoming movements
+Note: the coordinate settings (relative or absolute) should always be specified before and after these movements
 ```
 
 ## Arc Movements
@@ -66,9 +65,10 @@ Move Z axis to 240 mm at 300 mm/s: G1 Z240 F300
 | G2 |  Absolute or relative (mm)  | X offset (relative, mm) | Y offset (relative, mm) | Radius  |  Feed rate used from start to end point (mm/s) | Abs/rel extrusion (mm) | Clockwise arc |
 | G3 |  Absolute or relative (mm)  | X offset (relative, mm) | Y offset (relative, mm) | Radius  |  Feed rate used from start to end point (mm/s) |Abs/rel extrusion (mm) (mm) | Counter-clockwise arc |
 ```gcode
-I,J form: Counter clockwise arc around and X, Y offset:                 G3 X2 Y7 I-4 J-3
-R form: Counter clockwise arc with defined radius:                      G3 X2 Y7 R5
-Counter-clockwise arc from (20,20) with a radius of 5, with extrusion   G3 X20 Y20 R5 E0.5
+G3 X2 Y7 I-4 J-3  ; Counter-clockwise arc movement offset by (-4,-3) - no extrusion
+G2 X2 Y7 I-4 J-3  ; Clockwise arc movement offset by (-4,-3) - no extrusion
+G3 X2 Y7 R5 ; Counter-clockwise arc movement with radius of 5 (mm)
+G3 X20 Y20 R5 E0.5 ; Counter-clockwise arc around (20,20) with a radius of 5, extruding 0.5mm of filament
 ```
 
 
