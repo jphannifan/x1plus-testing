@@ -9,6 +9,13 @@ M73.2 R1.0 ; time remaining constant (unitless)
 M1002 set_gcode_claim_speed_level 5 ; speed level
 ```
 
+### How to use this?
+For A1, P1, and X1 owners who know how to use python, install `paho-mqtt` with pip and then run this script: [speed_adjust.py](https://github.com/jphannifan/x1plus-testing/blob/main/scripts/python/speed_adjust.py). The first time you run this, you'll be asked to input your printer's IP, serial number, and LAN code, but these credentials are saved locally so you only need to provide this info once. If you've set this up correctly, you will be prompted to choose one of the following:
+
+Option 0: input a speed (value between 30 and 180%), script will publish the gcode to your device.
+
+Option 1: input your current speed, target speed, step size (%), and time interval (sec), and the script will incrementally adjust your print speed.
+
 ### Bambu Speed Profiles
 Bambu printers all have 4 predefined speed profiles: Silent, Normal, Sport, and Ludicrous. Each profile contains an acceleration multiplier, a feed rate multiplier, and a time constant, which it uses to scale the speed settings configured in your slicer profiles. While there are only 4 presets in the UI, it is possible to apply custom speed profiles on *all* Bambu devices. Currently, unless you are an X1Plus user, you are limited to applying custom speed profiles via MQTT. Bambu Studio and Bambu Handy will automatically adjust time estimates, but please be aware that the **time remaining estimate and the reported print speed percentage are completely independent of feed rate and acceleration!** If you do not adjust all 3 of these parameters simultaneously, it will be nearly impossible to maintain constant extrusion profiles. 
 
