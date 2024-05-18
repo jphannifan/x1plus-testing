@@ -4,7 +4,14 @@ import time
 import json
 import threading
 import subprocess
+'''
+Interactive Gcode console for X1 Printers
 
+Requirements: X1Plus and a SSH connection to printer
+
+Usage: Save this script to your SD card and run it via SSH by
+> python3 /sdcard/log_monitor.py
+'''
 class TailLog:
     def __init__(self, filepath, seek_end=True, interval=1.0):
         self.filepath = filepath
@@ -53,15 +60,15 @@ class TailLog:
 log_path = "/mnt/sdcard/log/syslog.log" if os.path.exists("/tmp/.syslog_to_sd") and os.path.exists("/mnt/sdcard/log/") else "/tmp/syslog.log"
 
 def send_gcode(gcode_line):
-
-    json_payload = {
-        "print": {
-            "command": "gcode_line",
-            "sequence_id": "2001",
-            "param": gcode_line
-        }
-    }
-    mqtt_pub(json.dumps(json_payload))
+	print(f"Gcode sent: {gcode_line}")
+	json_payload = {
+		"print": {
+			"command": "gcode_line",
+			"sequence_id": "2001",
+			"param": gcode_line
+		}
+	}
+	mqtt_pub(json.dumps(json_payload))
 
 def mqtt_pub(message):
     command = f"source /usr/bin/mqtt_access.sh; mqtt_pub '{message}'"
@@ -97,7 +104,7 @@ def log_monitor():
 				if valid_line_pattern.match(line):
 					line = timestamp_pattern.sub('', line)
 					line = info_forward_pattern.sub('', line)
-					print(line)
+					print(f"> {line}")
 					captured_lines.append(line)
 	except Exception as e:
 		print(f"Failed to monitor log file: {e}")
@@ -106,7 +113,6 @@ def user_interaction():
 	try:
 		while True:
 			gcode_input = input("Publish Gcode command: ")
-			print(gcode_input)
 			send_gcode(gcode_input)
 			time.sleep(2)
 	except KeyboardInterrupt:
