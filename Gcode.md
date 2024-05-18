@@ -1,5 +1,6 @@
 # Bambu Labs Gcode Commands - Under construction!
 
+
 ## Overview
 
 This wiki provides documentation over BambuLabs Gcode, specifically for the X1 series. A majority of these commands work on other Bambu devices, but we have not tested on other devices. Several of these commands are being documented for the first time, and please take caution when using them. See below for information on the commands that X1Plus uses. 
@@ -12,9 +13,17 @@ Todo:
 - Skew compensation documentation
 
 
-## Table of Contents
+## Identifying Gcode format and parameters
 
+On the X1C and X1E, every Gcode command that the printer parses can be followed in realtime by monitoring the service `forward` or by viewing the output it generates in syslog.log. I have written a [script](https://github.com/jphannifan/x1plus-testing/blob/main/scripts/python/log_monitor.py) that automates this monitoring step, allowing you to view the output of any Gcode command without needing to open log files. To run this script, place it on your SD card and run
+`python3 /sdcard/log_monitor.py`
 
+You'll then be prompted to enter a Gcode command. Multiline Gcode commands must be separated by an escape character. If you discover new commands or find that a command on this page is documented incorrectly, please notify me or file an issue. When you publish a command that the device does not recognize, you'll typically receive this response: 
+
+`Gcode process inject cmd {command} fail!(0x11000005)
+`
+
+<img width="350" alt="log_monitor" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/36c6e61d-f3ce-4523-a866-e8e6c8b00c06">
 
 ## Homing and positioning
 | Command  | Argument | Use   |
