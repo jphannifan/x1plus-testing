@@ -5,12 +5,17 @@
 
 This wiki provides documentation over BambuLabs Gcode, specifically for the X1 series. A majority of these commands work on other Bambu devices, but we have not tested on other devices. Several of these commands are being documented for the first time, and please take caution when using them. See below for information on the commands that X1Plus uses. 
 
-Todo:
-- Table of contents
-- Organize everything
-- Define AMS gcode
-- Show usage examples and/or macros
-- Skew compensation documentation
+## Table of Contents
+- [Overview](#overview)
+- [Homing and Positioning Commands](#homing)
+- [Heaters](#heaters)
+- [Fans](#fans)
+- [Movement Commands](#movement)
+  - [Linear Movements](#g0-and-g1)
+  - [Arc Movements](#g2-and-g3)
+- [Coordinates](#coordinates)
+  - [Coordinate system commands](#coordinate-commands)
+  - [Useful Coordinates](#useful-coordinates)
 
 
 ## Identifying Gcode format and parameters
@@ -25,7 +30,7 @@ You'll then be prompted to enter a Gcode command. Multiline Gcode commands must 
 
 <img width="350" alt="log_monitor" src="https://github.com/jphannifan/x1plus-testing/assets/149451641/36c6e61d-f3ce-4523-a866-e8e6c8b00c06">
 
-## Homing and positioning
+## Homing
 | Command  | Argument | Use   |
 |---|---|---|
 | G29  | -  | Bed mesh calibration |
@@ -41,7 +46,7 @@ You'll then be prompted to enter a Gcode command. Multiline Gcode commands must 
 ** default = 0.00 mm \
 *** G380 is the same as G38
 
-## Heaters and Fans
+## Heaters
 | Command  | Argument  | Range | Use |
 |---|---|---|---|
 | M104  | S[temp]  | 0-300  | Set hotend temperature  |
@@ -49,13 +54,17 @@ You'll then be prompted to enter a Gcode command. Multiline Gcode commands must 
 | M109  | S[temp]  | 0-110  | Set bed temperature  |
 | M190  | S[temp]  | 0-110  |  Pause Gcode execution until set bed temp is reached  |
 
+## Fans
 | Command  | Argument  | Range | Use |
 |---|---|---|---|
 | M106  | P1 S[speed]  | 0-255  | Adjust part fan  |
 | M106  | P2 S[speed]  | 0-255  | Adjust aux fan  |
 | M106  | P3 S[speed]  | 0-255  | Adjust chamber fan  |
+note: M106 P4 and P5 work as well, but these are not currently useful to us 
 
-## G0 and G1
+## Movement
+
+### G0 and G1
 | Command  | X Y Z  |  F  |  E  | Usage |
 |---|---|---|---|---|
 | G0 |  Absolute or relative (mm)  | Feed rate used from start to end point (mm/s) | N/A | Linear non-print movement |
@@ -68,7 +77,7 @@ G1 F20000 ; adjust acceleration to be used with upcoming movements
 Note: the coordinate settings (relative or absolute) should always be specified before and after these movements
 ```
 
-## Arc Movements
+### G2 and G3
 | Command  | X Y Z  |  I  |  J  |  R  |  F  |  E  | Usage |
 |---|---|---|---|---|---|---|---|
 | G2 |  Absolute or relative (mm)  | X offset (relative, mm) | Y offset (relative, mm) | Radius  |  Feed rate used from start to end point (mm/s) | Abs/rel extrusion (mm) | Clockwise arc |
@@ -80,8 +89,16 @@ G3 X2 Y7 R5 ; Counter-clockwise arc movement with radius of 5 (mm)
 G3 X20 Y20 R5 E0.5 ; Counter-clockwise arc around (20,20) with a radius of 5, extruding 0.5mm of filament
 ```
 
+## Coordinates
+### Coordinate commands
+| Command  | Usage  
+|---|---
+| G90  | Absolute coordinates  
+| G91  | Relative coordinates  
+| G92 E0  | Reset extruder position  
+| M83  | Set extruder relative  
 
-## Useful coordinates and reference points
+### Useful coordinates
 | Location  | X  | Y | Z |
 |---|---|---|---|
 | Center of build plate  | 128  | 128  | -  |
@@ -95,35 +112,33 @@ G3 X20 Y20 R5 E0.5 ; Counter-clockwise arc around (20,20) with a radius of 5, ex
 ## Motor controls
 | Command  | Argument  | Usage  
 |---|---|---|
-|  M17 | X Y Z  | Set stepper current (unitless)  
+|  M17 | X Y Z  | Set stepper current (amps)  
 |  M17 | R  | Restore default values  
 |  M17 | S  | Enable steppers  
 |  M18  | none  |  Disable all steppers   
 |  M18  | X Y Z E  |  Disable steppers for certain axes  
 Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 
-## Coordinate commands
-| Command  | Usage  
-|---|---
-| G90  | Absolute coordinates  
-| G91  | Relative coordinates  
-| G92 E0  | Reset extruder position  
-| M83  | Set extruder relative  
-
-## Speed/acceleration/endstop limits
+## Limit and endstop commands
 | Command  | Argument |  Default |  Usage
 |---|---|---|---|
 | M201  | Z (mm/s) | -  | Z axis acceleration limit  |
 | M204.2  | K  | 1.0  | Set acceleration multiplier
 | M220  | S  | 100  | Set Feed Rate
-| M221  | S  | 100  | Set Flow Rate
-| M221  | S  | -  | Push soft endstop status
-| M221  | Z0  | -  | Turn off Z endstop
 | M204  | S  | -  | Acceleration limit (mm/s^2)
 | M205  | X Y Z  (mm/s) | 0  | Set jerk limits
 | M211  | X Y Z  (mm) | -  | Set soft endstops
+| M221  | S  | 100  | Set Flow Rate
+| M221  | S  | -  | Push soft endstop status
+| M221  | Z0  | -  | Turn off Z endstop
+```gcode
+M221 S100 ; set the flow ratio to default (100%)
+M221 S ; Push soft endstop status
+M221 X0 Y0 Z1 ; turn off X and Y endstops, turn on Z endstop
+M221 Z1 ; enable Z endstop
+```
 
-
+## Printer configuration
 | Command  | Arguments | Usage  |
 |---|---|---
 | M412  | S0/S1  | Toggle filament runout detection 
