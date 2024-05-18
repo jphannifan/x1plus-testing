@@ -126,7 +126,7 @@ Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 | M204.2  | K  | 1.0  | Set acceleration multiplier
 | M220  | S  | 100  | Set Feed Rate
 | M204  | S  | -  | Acceleration limit (mm/s^2)
-| M205  | X Y Z  (mm/s) | 0  | Set jerk limits
+| M205  | X Y Z E (mm/s) | 0  | Set jerk limits
 | M211  | X Y Z  (mm) | -  | Set soft endstops
 | M221  | S  | 100  | Set Flow Rate
 | M221  | S  | -  | Push soft endstop status
@@ -326,6 +326,10 @@ G29.4 S0/S1 - toggles "high freq z comp"
 G29.5 - "G29.5 failed: invalid params"
 G29.6, G29.7, G29.8 - runs normal bed probing sequence? 
 M969 S1 N3 A2000
+M964: NO_NEW_EXTRIN_CALI_PARA
+M963 squence dismatch! Need(15) Get(15) rtn=0x1
+M967
+M966
 M980.3 A B C D E F G H I J K 
 G92.1 E0
 noise cancellation:
