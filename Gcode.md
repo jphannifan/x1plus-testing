@@ -189,14 +189,14 @@ K: not sure but = 0 or 1
 | M900  | - | Publish to return currently saved pressure advance |
 
 
-## Skew compensation
+## Skew and XY compensation - skew compensation wiki coming soon
 | Command  | Argument |  Usage
 |---|---|---|
 | M1005  | X Y (mm) | Calculates skew (rad) from lengths of diagonals measured  |
 | M1005  | I (rad)  | Overwrite skew value on printer  |
-| M1005  | -  | Return current skew value stored on the printer  |
+| M1005  | P0/P1  | Toggle skew compensation (0 = off, 1 = on)  |
 | M290.2  | X Y (mm) |  XY compensation  |
-
+| M290  | X Y (mm) |  XY compensation?  |
 
 ## LED controls
 | Argument | Value  | Usage  |
