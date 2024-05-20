@@ -50,8 +50,8 @@ You'll then be prompted to enter a Gcode command. Multiline Gcode commands must 
 | Command  | Argument  | Range | Use |
 |---|---|---|---|
 | M104  | S[temp]  | 0-300  | Set hotend temperature  |
-| M140  | S[temp]  | 0-300  | Pause Gcode execution until set nozzle temp is reached  |
-| M109  | S[temp]  | 0-110  | Set bed temperature  |
+| M109  | S[temp]  | 0-300  | Pause Gcode execution until set nozzle temp is reached  |
+| M140  | S[temp]  | 0-110  | Set bed temperature  |
 | M190  | S[temp]  | 0-110  |  Pause Gcode execution until set bed temp is reached  |
 
 ## Fans
