@@ -8,8 +8,7 @@ This wiki provides documentation over BambuLabs Gcode, specifically for the X1 s
 ## Table of Contents
 - [Overview](#overview)
 - [Homing and Positioning Commands](#homing)
-- [Heaters](#heaters)
-- [Fans](#fans)
+- [Temperature Control](#temperature-control)
 - [Movement Commands](#movement)
   - [Linear Movements](#g0-and-g1)
   - [Arc Movements](#g2-and-g3)
@@ -34,33 +33,31 @@ You'll then be prompted to enter a Gcode command. Multiline Gcode commands must 
 | Command  | Argument | Use   |
 |---|---|---|
 | G29  | -  | Bed mesh calibration |
-| G29.1  | Z{z_offset}  | Set z offset (mm)*, **|
+| G29.1*  | Z[z_offset]  | Set z offset (mm)|
 | G28  | -  | Home all axes  |
 | G28  | X  | XY homing  |
 | G28  | Z P0  | Low precision Z home  |
 | G28  | Z P0 T[temp]  | Lower precision Z home + heated nozzle  |
-| G38  | S2 Z[z] F[speed]  | Move Z axis only (Z: mm, F: mm/s)  |
-| G380***  | S2 Z[z] F[speed]  | Move Z axis only (Z: mm, F: mm/s)  |
+| G380**  | S2 Z[z] F[speed]  | Move Z axis only (Z: mm, F: mm/s)  |
+| G90  |  -  | Absolute coordinates |
+| G91  |  -  |  Relative coordinates  |
+| G92  |  E0  |  Reset extruder position  |
+| M83  |  -  |  Set extruder relative  |
 
-*include brackets in this command \
-** default = 0.00 mm \
-*** G380 is the same as G38
+* Textured PEI offset = -0.04 mm, default offset = 0 mm
 
-## Heaters
+** Must be preceded by G91!
+
+## Temperature Control
 | Command  | Argument  | Range | Use |
 |---|---|---|---|
 | M104  | S[temp]  | 0-300  | Set hotend temperature  |
 | M109  | S[temp]  | 0-300  | Pause Gcode execution until set nozzle temp is reached  |
 | M140  | S[temp]  | 0-110  | Set bed temperature  |
 | M190  | S[temp]  | 0-110  |  Pause Gcode execution until set bed temp is reached  |
-
-## Fans
-| Command  | Argument  | Range | Use |
-|---|---|---|---|
-| M106  | P1 S[speed]  | 0-255  | Adjust part fan  |
-| M106  | P2 S[speed]  | 0-255  | Adjust aux fan  |
-| M106  | P3 S[speed]  | 0-255  | Adjust chamber fan  |
-note: M106 P4 and P5 work as well, but these are not currently useful to us 
+| M106  | P1 S[speed]  | 0-255  | Set part fan speed  |
+| M106  | P2 S[speed]  | 0-255  | Set aux fan speed |
+| M106  | P3 S[speed]  | 0-255  | Set chamber fan speed |
 
 ## Movement
 
@@ -89,15 +86,6 @@ G3 X2 Y7 R5 ; Counter-clockwise arc movement with radius of 5 (mm)
 G3 X20 Y20 R5 E0.5 ; Counter-clockwise arc around (20,20) with a radius of 5, extruding 0.5mm of filament
 ```
 
-## Coordinates
-### Coordinate commands
-| Command  | Usage  
-|---|---
-| G90  | Absolute coordinates  
-| G91  | Relative coordinates  
-| G92 E0  | Reset extruder position  
-| M83  | Set extruder relative  
-
 ### Useful coordinates
 | Location  | X  | Y | Z |
 |---|---|---|---|
@@ -108,6 +96,7 @@ G3 X20 Y20 R5 E0.5 ; Counter-clockwise arc around (20,20) with a radius of 5, ex
 | Bed tramming screw 2  | 33.2  | 13.2  | -  |
 | Bed tramming screw 3  | 222.8  | 13.2  | -  |
 | Build plate nozzle wipe tab | 135  | 253  | -  |
+| Purge line start | 18  | 1.0  | 0.8 | 
 
 ## Motor controls
 | Command  | Argument  | Usage  
@@ -162,8 +151,10 @@ M221 Z1 ; enable Z endstop
 |---|---|---
 | M970  | Q A B C H K  | Vibration compensation frequency sweep
 | M970.3  | Q A B C H K  | Vibration compensation fast sweep  
-| M974  | Q S2 P0  | Apply curve fitting to vibration compensation data
+| M974  | Q[axis] S2 P0  | Apply curve fitting to vibration compensation data
 | M975  | S0/S1  | Toggle vibration compensation  
+| M982  | Q P V D L T I | Motor noise cancellation
+| M982.4 | S V | Motor noise cancellation
 
 ```gcode
 Vibration compensation:
@@ -275,19 +266,12 @@ M973 S6 P1 ; auto expose for vertical laser
 ### AMS
 ```gcode
 M622 J{j}
-```
-
-```gcode
 M623
-```
 
 Retract filament
-```gcode
 M620 S255
 ; retraction gcode
 M621 S255
-```
-```gcode
 M622.1 S1 
 ```
 # Select extruder
@@ -320,7 +304,7 @@ M621
 M621 S#- load filament in AMS by tray index
 Stolen from Doridian's repo https://github.com/Doridian/OpenBambuAPI/blob/main/gcode.md
 
-# undocumented still
+# undocumented still - use with caution!
 ```gcode
 G29.4 S0/S1 - toggles "high freq z comp" 
 G29.5 - "G29.5 failed: invalid params"
@@ -332,7 +316,5 @@ M967
 M966
 M980.3 A B C D E F G H I J K 
 G92.1 E0
-noise cancellation:
-M982 Q P V D L T I
-M982.4 S V
+M1001 invalid test/sub-test case!
 ```
