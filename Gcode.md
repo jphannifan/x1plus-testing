@@ -1,4 +1,4 @@
-# Bambu Labs Gcode Commands - Under construction!
+# Gcode Commands for Bambu X1 Printers
 
 
 ## Overview
