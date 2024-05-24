@@ -194,8 +194,8 @@ K: not sure but = 0 or 1
 |---|---|---|
 |  M960 S1  | 0 or 1  | Toggle horizontal laser |
 |  M960 S2  | 0 or 1  | Toggle vertical laser  | 
-|  M960 S3  | 0 or 1  | Toggle toolhead LED  | 
 |  M960 S4  | 0 or 1  | Toggle nozzle LED |  
+|  M960 S5  | 0 or 1  | Toggle logo led |
 |  M960 S0  | 0 or 1  | Toggle all LEDs  |  
 
 ## Camera Controls
