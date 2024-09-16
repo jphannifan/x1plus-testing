@@ -1,6 +1,18 @@
 # X1Plus Print Speed Adjustment UI
 
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/e11ab484-d99c-432c-8c42-302a6cab1e0d">
+<img width="648" alt="image" src="https://github.com/user-attachments/assets/30900ff9-4f34-41d5-a092-6a7711c138f0">
+
+a. Current speed
+
+b. Print time estimate (for the selected value)
+
+c. Acceleration magnitude constant (M204.2)
+
+d. Feed rate constant (M220)
+
+e. Time remaining constant (M73.2)
+
+f. Toggle step size of the dial (2 or 10%)
 
 ## Background
 
@@ -28,19 +40,19 @@ The step size of the dial can be adjusted by toggling the 'Step size' button in 
 
 Print speed adjustment on X1, P1, and A1 Bambu printers is applied with a series of 4 different Gcode commmands:
 
-### M204.1 K
-Acceleration magnitude, or the multiplier that is applied to your slicer profile acceleration settings. For "Normal" mode, K=1.0. The argument of this command is unitless. 
+### M204.1 K1.0
+Acceleration magnitude. K is a unitless multiplier of acceleration
 
-### M220 K
-Feed rate multipler is used to adjust extrusion and feed rate. Similarly to the acceleration magnitude command, this command applies a unitless multiplier to your slicer settings (ie, it WILL override your slicer settings). The default value (Normal mode) is K=1.0. 
+### M220 K1.0
+Feed rate. K is a unitless multiplier of feed rate
 
-### M73.2 R
-Time remaining multiplier. This parameter supplied to this command is used to adjust both the time remaining estimate and the displayed speed percentage in the slicer, Bambu Handy, and the touchscreen UI. This is easily calculated by dividing the target speed percentage by 100 and taking the inverse of this fraction. For instance, 200% speed would be a time multiplier of 100/200 = 0.5.
+### M73.2 R1.0
+Time remaining. The percentage speed is calculated from the inverse of R x 100. 
 
-### M1002 set_gcode_claim_speed_level
-This command is used by the UI to find the correct string value for a speed profile. It does not have any effect on print behavior. If you are applying your own speed profiles, you may exclude this command.
+### M1002 set_gcode_claim_speed_level 5
+Tells the UI which string to display ("Silent", "Normal", "Sport", or "Ludicrous"). It can be ommitted
 
-## Interpolating to define custom speed profiles
+## Interpolation of M204.2 and M220 parameters
 
 Below are the parameters for each of Bambu's speed profiles obtained from log data. X1Plus uses cubic spline interpolation and linear extrapolation to calculate acceleration magnitude and feed rate, which it then publishes to the printer when the 'Apply' button is pressed. 
 
