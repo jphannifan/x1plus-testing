@@ -113,7 +113,7 @@ Note: (X,Y,Z) = (1.2, 1.2, 0.75) defined as defaults in slicer
 |---|---|---|---|
 | M201  | Z (mm/s) | -  | Z axis acceleration limit  |
 | M204.2  | K  | 1.0  | Set acceleration multiplier
-| M220  | S  | 100  | Set Feed Rate
+| M220  | K  | 100  | Set Feed Rate
 | M204  | S  | -  | Acceleration limit (mm/s^2)
 | M205  | X Y Z E (mm/s) | 0  | Set jerk limits
 | M211  | X Y Z  (mm) | -  | Set soft endstops
