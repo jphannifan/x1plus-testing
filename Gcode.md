@@ -138,7 +138,7 @@ M221 Z1 ; enable Z endstop
 | M1003 | S0/S1  |  Toggle power loss recovery 
 | M500  |  -    | Save to EEPROM
 
-## Print Speed - [Click here for more info](https://github.com/jphannifan/x1plus-testing/blob/main/BL-speed-adjust.md)
+## Print Speed - [Click here for more info](https://github.com/jphannifan/x1plus-testing/blob/main/Speed Adjustment/BL-speed-adjust.md)
 | Command  | Argument  | Usage  |
 |---|---|---|
 | M204.2  | K (unitless)  | acceleration magnitude (default=1)  |
